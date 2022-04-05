@@ -39,6 +39,7 @@ username = config['Telegram']['username']
 # Create the client and connect
 client = TelegramClient(username, api_id, api_hash)
 
+
 async def main(phone):
     await client.start()
     print("Client Created")
@@ -62,13 +63,16 @@ async def main(phone):
     my_channel = await client.get_entity(entity)
 
     offset_id = 0
-    limit = 100
+    limit = 10
     all_messages = []
     total_messages = 0
     total_count_limit = 0
 
-    while True:
-        print("Current Offset ID is:", offset_id, "; Total Messages:", total_messages)
+    true_limit = 0
+    while true_limit <= 1:
+        print("Current Offset ID is:", offset_id,
+              "; Total Messages:", total_messages)
+        true_limit += 1
         history = await client(GetHistoryRequest(
             peer=my_channel,
             offset_id=offset_id,
@@ -79,6 +83,7 @@ async def main(phone):
             min_id=0,
             hash=0
         ))
+
         if not history.messages:
             break
         messages = history.messages
